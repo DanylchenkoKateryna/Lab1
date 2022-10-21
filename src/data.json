@@ -1,0 +1,25 @@
+{
+  "newsItems": [
+
+    {
+      "date": "21.10.2022",
+      "name": "Turkish card",
+      "cardnumber": "2450 24512 25412"
+    },
+    {
+      "date": "21.10.2022",
+      "name": "Swedish card",
+      "cardnumber": "2450 24512 25412"
+    },
+    {
+      "date": "21.10.2022",
+      "name": "Swediassh card",
+      "cardnumber": "2450 24512 25412"
+    },
+    {
+      "date": "21.10.2022",
+      "name": "Swedifgsh card",
+      "cardnumber": "2450 24512 25412"
+    }
+  ]
+}

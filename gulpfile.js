@@ -20,23 +20,26 @@ const srcFolder="src";
 const path={
     build:{
         html:buildFolder + "/",
-        css:buildFolder + "/css/",
+        css:buildFolder + "/css/",////
         js:buildFolder + "/js/",
         img:buildFolder + "/img/",
-        fonts:buildFolder + "/fonts/"
+        fonts:buildFolder + "/fonts/",
+        json:buildFolder+"/"
     },
     src:{
         html:[srcFolder + "/*.html","!"+srcFolder + "/_*.html"],
         css:srcFolder + "/scss/style.scss",
         js:srcFolder + "/js/script.js",
         img:srcFolder + "/img/**/*.{jpeg,png,svg,gif,ico,webp}",
-        fonts:srcFolder + "/fonts/*.ttf"          
+        fonts:srcFolder + "/fonts/*.ttf"   ,
+        json:srcFolder+"/*.json"       
     },
     watch:{
         html:srcFolder + "/**/*.html",
         css:srcFolder + "/scss/**/*.scss",
         js:srcFolder + "/js/**/*.js",
-        img:srcFolder + "/img/**/*.{jpeg,png,svg,gif,ico,webp}"
+        img:srcFolder + "/img/**/*.{jpeg,png,svg,gif,ico,webp}",
+        json:srcFolder+"/**/*.json"
     },
     clean: "./"+ buildFolder +"/"
 }
@@ -53,11 +56,16 @@ function fonts(){
 function browserSync(params){
    browsersync.init({
         server:{
-            baseDir: "./"+ buildFolder +"/"
+            baseDir: "./"+ buildFolder +"/",
         },
         port:3000,
         notify:false
     })
+}
+
+function json(){
+return src(path.src.json)
+.pipe(dest('dist/'));
 }
 
 function html(){
@@ -125,7 +133,7 @@ gulp.task('otf2ttf',function(){
     .pipe(fonter({
         formats:['ttf']
     }))
-    .pipe(dest(srcFolder+'/fonts/'))
+    .pipe(dest(srcFolder+'/fonts/'));
 })
 
 function watchFiles(){
@@ -133,12 +141,15 @@ function watchFiles(){
     gulp.watch([path.watch.css],css);
     gulp.watch([path.watch.js],js);
     gulp.watch([path.watch.img],images);
+    gulp.watch([path.watch.img],json);
+
 }
 
-const build=gulp.series(clean,gulp.parallel(html,css,js,images,fonts));
+
+const build=gulp.series(clean,gulp.parallel(html,css,js,images,fonts,json));
 const watch=gulp.parallel(build,watchFiles,browserSync);
 
-
+exports.json=json;
 exports.fonts=fonts;
 exports.images=images;
 exports.js=js;
